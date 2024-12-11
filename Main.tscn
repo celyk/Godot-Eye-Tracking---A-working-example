@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8cpwg6xqlpn5"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_cb5ke"]
+[ext_resource type="Texture2D" uid="uid://etq2tkd2bpyb" path="res://panorama_image.png" id="2_a0hlo"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4rq58"]
+panorama = ExtResource("2_a0hlo")
+
+[sub_resource type="Sky" id="Sky_erywn"]
+sky_material = SubResource("PanoramaSkyMaterial_4rq58")
+
+[sub_resource type="Environment" id="Environment_ix2ro"]
+background_mode = 2
+sky = SubResource("Sky_erywn")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_6htiy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_futem"]
+shading_mode = 0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_cb5ke")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ix2ro")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="Eyes" type="XRController3D" parent="XROrigin3D"]
+tracker = &"/user/eyes_ext"
+pose = &"eye_gaze"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/Eyes"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, -1000)
+mesh = SubResource("QuadMesh_6htiy")
+surface_material_override/0 = SubResource("StandardMaterial3D_futem")

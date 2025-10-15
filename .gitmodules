@@ -1,0 +1,3 @@
+[submodule "addon/GPUTrail"]
+	path = addon/GPUTrail
+	url = git@github.com:celyk/GPUTrail.git
